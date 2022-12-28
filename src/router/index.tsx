@@ -8,6 +8,10 @@ const User = lazy(() => import('../views/User'))
 // 重定向组件
 import { Navigate } from 'react-router-dom'
 
+const withLoadingComponent = (comp: JSX.Element) => (
+  <React.Suspense fallback={<div>Loading</div>}>{comp}</React.Suspense>
+)
+
 const routes = [
   {
     path: '/',
@@ -19,19 +23,11 @@ const routes = [
   },
   {
     path: '/about',
-    element: (
-      <React.Suspense fallback={<div>Loading</div>}>
-        <About />
-      </React.Suspense>
-    ),
+    element: withLoadingComponent(<About />),
   },
   {
     path: '/user',
-    element: (
-      <React.Suspense fallback={<div>Loading</div>}>
-        <User />
-      </React.Suspense>
-    ),
+    element: withLoadingComponent(<User />),
   },
 ]
 
